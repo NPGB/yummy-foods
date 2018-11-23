@@ -1,0 +1,15 @@
+.a-product {
+    display: block;
+    width: 50%;
+    float: left;
+}
+
+.img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.text-name {
+    text-align: center;
+}

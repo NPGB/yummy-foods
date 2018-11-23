@@ -14,8 +14,9 @@ if (!isset($_SESSION['admin_name'])) {
 	<title>admin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/admin.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/admin.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/admin_all_product.css">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -64,22 +65,25 @@ if (!isset($_SESSION['admin_name'])) {
 			                <div class="col-md-8">
 	        		            <?php
 														if ($result->num_rows > 0) {
+														?>
+															<div>
+															<?php
 															// Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
 															// do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
 															while ($row = $result->fetch_assoc()): 
-													?>
-																	<tr>
-																			<td><?php echo htmlspecialchars($row['product_id']) ?></td>
-																			<td><?php echo htmlspecialchars($row['product_name']); ?></td>
-																			<td><?php echo htmlspecialchars($row['product_price']); ?></td>
-																			<td><?php echo htmlspecialchars($row['unit']); ?></td>
-																			<td><?php echo htmlspecialchars($row['product_description']); ?></td>
-																			<td><?php echo htmlspecialchars($row['sold_out']); ?></td>
-																			<td><?php echo htmlspecialchars($row['roup_species']); ?></td>
-																			<td><?php echo htmlspecialchars($row['supplier']); ?></td>
-																	</tr>
-													<?php 
-														endwhile; 
+															?>
+																<div class="a-product">
+																	<a href="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
+																	<img class="img" src="assets/img/<?php echo htmlspecialchars($row['img']) ?>" alt="<?php echo htmlspecialchars($row['img']) ?>">
+																	</a>
+																	<p class="text-name"><?php echo htmlspecialchars($row['product_name']); ?></p>
+																	<p class="text-name">price: <?php echo htmlspecialchars($row['product_price']); ?>/<?php echo htmlspecialchars($row['unit']); ?><?php if($row['sold_out'] == 1 ) echo '<span  style="color: red;">  sold out</span>' ?></p>
+																</div>
+															<?php 
+																endwhile; 
+															?>
+															</div>
+															<?php
 														// Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
 														// Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
 														mysqli_free_result($query);

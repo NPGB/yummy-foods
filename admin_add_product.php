@@ -123,7 +123,7 @@ if (!isset($_SESSION['admin_name'])) {
 		                                <label for="text" class="col-12 col-form-label">sold_out:</label> 
 		                                <div class="col-12">
 		                                 	<input type="radio" name="sold_out" value="1" required="">True
-		                                 	<input type="radio" name="sold_out" value="0" required="">False
+		                                 	<input type="radio" name="sold_out" value="0" required="" checked="checked">False
 		                                </div>
 	                              	</div>
 	                               	<div class="form-group row">
