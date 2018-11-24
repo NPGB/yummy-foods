@@ -15,7 +15,7 @@ if (!isset($_SESSION['admin_name'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/admin_product.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/user.css">
 	<link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
@@ -29,43 +29,37 @@ if (!isset($_SESSION['admin_name'])) {
         // hoi lai co chac muon edit
         ?>
 				<script type="text/javascript">
-					alert('Are you sure you want to edit this product?');
+					alert('Are you sure you want to edit this user?');
 				</script>
 		<?php
 		// lấy thông tin 
-		$product_name = $_POST["product_name"];
-		$product_price = $_POST["product_price"];
-		$unit = $_POST["unit"];
-		$product_description = $_POST["product_description"];
-		$sold_out = $_POST["sold_out"];
-		$group_species = $_POST["group_species"];
-		$supplier = $_POST["supplier"];
-		$img = $_POST["img"];
+		$user_name = $_POST["user_name"];
+		$password = $_POST["password"];
+		$image = $_POST["image"];
+		$address = $_POST["address"];
+		$number_phone = $_POST["number_phone"];
+		$role = $_POST["role"];
 		//làm sạch thông tin, xóa bỏ các tag html, ký tự đặc biệt 
 		//mà người dùng cố tình thêm vào để tấn công theo phương thức sql injection
-		$product_name = strip_tags($product_name);
-		$product_name  = addslashes($product_name );
-		$product_price = strip_tags($product_price);
-		$product_price = addslashes($product_price);
-		$unit = strip_tags($unit);
-		$unit = addslashes($unit);
-		$product_description = strip_tags($product_description);
-		$product_description = addslashes($product_description);
-		$sold_out = strip_tags($sold_out);
-		$sold_out = addslashes($sold_out);
-		$group_species = strip_tags($group_species);
-		$group_species = addslashes($group_species);
-		$supplier = strip_tags($supplier);
-		$supplier = addslashes($supplier);
-		$img = strip_tags($img);
-        $img = addslashes($img);
-        $id = $_GET["id"];
-			$sql = "UPDATE `product` SET `product_name`='${product_name}',`product_price`='${product_price}',`unit`='${unit}',`product_description`='${product_description}',`sold_out`='${sold_out}',`group_species`='${group_species}',`supplier`='${supplier}',`img`='${img}' WHERE `product_id` = '${id}'";
+		$user_name = strip_tags($user_name);
+		$user_name  = addslashes($user_name );
+		$password = strip_tags($password);
+		$password = addslashes($password);
+		$image = strip_tags($image);
+		$image = addslashes($image);
+		$address = strip_tags($address);
+		$address = addslashes($address);
+		$number_phone = strip_tags($number_phone);
+		$number_phone = addslashes($number_phone);
+		$role = strip_tags($role);
+		$role = addslashes($role);
+        $user_id = $_GET["id"];
+			$sql = "UPDATE `user` SET `user_name`='${user_name}',`password`='${password}',`image`='${image}',`address`='${address}',`number_phone`='${number_phone}',`role`='${role}' WHERE `user_id` = '${user_id}'";
 			$query = mysqli_query($conn,$sql);
 			if ($query) {
 				?>
 				<script type="text/javascript">
-					alert('have successfully edited the product');
+					alert('have successfully edited this user');
 				</script>
 				<?php
 			}else{
@@ -81,19 +75,19 @@ if (!isset($_SESSION['admin_name'])) {
         // hoi lai co chac muon delete
         ?>
 				<script type="text/javascript">
-					alert('Are you sure you want to delete this product?');
+					alert('Are you sure you want to delete this user?');
 				</script>
 		<?php
-        $id = $_GET["id"];
-			$sql = "DELETE FROM `product` WHERE  `product_id` = '${id}'";
+        $user_id = $_GET["id"];
+	$sql = "DELETE FROM `user` WHERE `user_id` = '${user_id}'";
 			$query = mysqli_query($conn,$sql);
 			if ($query) {
 				?>
 				<script type="text/javascript">
-					alert('have successfully delete the product');
+					alert('have successfully delete the user');
 				</script>
 				<?php
-				header('Location: admin.php');
+				header('Location: users.php');
 			}else{
 				?>
 				<script type="text/javascript">
@@ -103,8 +97,8 @@ if (!isset($_SESSION['admin_name'])) {
 			}
     }
     // list san pham neu co
-        $id = $_GET["id"];
-			$sql = "SELECT `product_id`, `product_name`, `product_price`, `unit`, `product_description`, `sold_out`, `group_species`, `supplier`, `img` FROM `product` WHERE `product_id`= '${id}'";
+        $user_id = $_GET["id"];
+			$sql = "SELECT * FROM `user` WHERE `user_id`= '${user_id}'";
 			$result = $conn->query($sql);// cach viet
 	//}
 ?>
@@ -114,7 +108,7 @@ if (!isset($_SESSION['admin_name'])) {
 			        <div class="card-body">
 			            <div class="row">
 			                <div class="col-md-3 border-right">
-			                    <h4>Add New Post</h4>
+			                    <h4>Add New User</h4>
 			                </div>
 			                <div class="col-md-7">
 			                    <button type="button" class="btn btn-sm btn-primary">Add New</button>
@@ -124,7 +118,7 @@ if (!isset($_SESSION['admin_name'])) {
 			            <hr>
 			            <div class="row">
 			                <div class="col-md-8">
-	        		            <?php
+								<?php
                                     if ($result->num_rows > 0) {
                                     ?>
                                         <div>
@@ -133,65 +127,45 @@ if (!isset($_SESSION['admin_name'])) {
                                         // do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
                                         $row = $result->fetch_assoc();
                                         ?>
-                                            <div class="a-product">
-                                                <img class="img" style="max-width:400px;" src="assets/img/product/<?php echo htmlspecialchars($row['img']) ?>" alt="<?php echo htmlspecialchars($row['img']) ?>">
-                                                <form method="POST" action="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
+                                            <div class="a_user_name">
+                                                <img class="img" style="max-width:400px;" src="assets/img/user/<?php echo htmlspecialchars($row['image']) ?>" alt="<?php echo htmlspecialchars($row['image']) ?>">
+                                                <form method="POST" action="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>">
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">Product Name:</label> 
+                                                        <label for="text" class="col-12 col-form-label">User name:</label> 
                                                         <div class="col-12">
-                                                        <input id="text" name="product_name" value="<?php echo htmlspecialchars($row["product_name"]) ?>" class="form-control here" required="required" type="text" maxlength="100">
+                                                        <input id="text" name="user_name" value="<?php echo htmlspecialchars($row["user_name"]) ?>" class="form-control here" required="required" type="text" maxlength="50">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">Product Price 1 unit:</label> 
+                                                        <label for="text" class="col-12 col-form-label">password:</label> 
                                                         <div class="col-12">
-                                                        <input id="number" name="product_price" value="<?php echo htmlspecialchars($row["product_price"]) ?>" class="form-control here" required="required" type="text" min="1000" max="100000">
+                                                        <input id="text" name="password" value="<?php echo htmlspecialchars($row["password"]) ?>" class="form-control here" required="required" type="text" maxlength="50">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">Unit:</label> 
+                                                        <label for="text" class="col-12 col-form-label">Address:</label> 
                                                         <div class="col-12">
-                                                        <input id="text" name="unit" value="<?php echo htmlspecialchars($row["unit"]) ?>" class="form-control here" required="required" type="text" maxlength="50">
+                                                        <input id="text" name="address" value="<?php echo htmlspecialchars($row["address"]) ?>" class="form-control here" required="required" type="text" maxlength="120">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">sold_out:</label> 
+                                                        <label for="text" class="col-12 col-form-label">Number phone:</label> 
                                                         <div class="col-12">
-                                                            <input type="radio" name="sold_out" value="1" <?php if($row["sold_out"]==1) echo "checked=\"checked\""  ?>>True
-                                                            <input type="radio" name="sold_out" value="0" <?php if($row["sold_out"]==0) echo "checked=\"checked\""  ?>>False
+														<input id="text" name="number_phone" value="<?php echo htmlspecialchars($row["number_phone"]) ?>" class="form-control here" required="required" type="number" maxlength="11">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">group_species:</label> 
+                                                        <label for="text" class="col-12 col-form-label">image:</label> 
                                                         <div class="col-12">
-                                                            <select name="group_species" >
-                                                                <option value="snacks"      <?php if($row["group_species"]=="snacks") echo "selected=\"selected\""  ?>>snacks</option>
-                                                                <option value="drinks"      <?php if($row["group_species"]=="drinks") echo "selected=\"selected\""  ?>>drinks</option>
-                                                                <option value="milk tea"    <?php if($row["group_species"]=="milk tea") echo "selected=\"selected\""  ?>>milk tea</option>
-                                                                <option value="fruits"      <?php if($row["group_species"]=="fruits") echo "selected=\"selected\""  ?>>fruits</option>
-                                                                <option value="Fruit beams" <?php if($row["group_species"]=="Fruit beams") echo "selected=\"selected\""  ?>>Fruit beams</option>
-                                                                <option value="other"       <?php if($row["group_species"]=="other") echo "selected=\"selected\""  ?>>other</option>
-                                                            </select>
+                                                            <input id="text" name="image" value="<?php echo htmlspecialchars($row["image"]) ?>" class="form-control here"  type="text" maxlength="50">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">supplier:</label> 
+                                                        <label for="text" class="col-12 col-form-label">role:</label> 
                                                         <div class="col-12">
-                                                            <input id="text" name="supplier" value="<?php echo htmlspecialchars($row["supplier"]) ?>" class="form-control here"  type="text" maxlength="50">
+                                                            <input id="text" name="role" value="<?php echo htmlspecialchars($row["role"]) ?>" class="form-control here"  type="number" maxlength="10" >
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="text" class="col-12 col-form-label">Image of Product:</label> 
-                                                        <div class="col-12">
-                                                            <input id="text" name="img" value="<?php echo htmlspecialchars($row["img"]) ?>" class="form-control here"  type="text" maxlength="30" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="textarea" class="col-12 col-form-label">Product Description:</label> 
-                                                        <div class="col-12">
-                                                        <textarea id="textarea" name="product_description" placeholder="<?php echo htmlspecialchars($row["product_description"]) ?>" cols="40" rows="5" class="form-control" maxlength="1000"></textarea>
-                                                        </div>
-                                                    </div> 
                                                     <div class="col-12">
                                                         <button type="add" name="delete" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
                                                         <button type="add" name="edit" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
@@ -237,8 +211,6 @@ if (!isset($_SESSION['admin_name'])) {
 	                                        </div>
 	                                      </div> 
 	                                    </form>
-	                                    
-
 	                                  </div>
 	                                  <div class="card-footer bg-light">
 	                                      <a href="#">Choose from the most used tags</a>
@@ -255,7 +227,6 @@ if (!isset($_SESSION['admin_name'])) {
 	                                        <div class=" col-2">
 	                                          <button name="submit" type="submit" class="btn btn-light">Add</button>
 	                                        </div>
-	                                        
 	                                      </div> 
 	                                    </form>
 	                                    <form>
@@ -278,15 +249,12 @@ if (!isset($_SESSION['admin_name'])) {
 	                            <div class="card mb-3" style="max-width: 18rem;">
 	                                  <div class="card-header bg-light ">Featured Image</div>
 	                                  <div class="card-body">
-	                                    
-
 	                                  </div>
 	                                  <div class="card-footer bg-light">
 	                                      <a href="#">Set Featured Image</a>
 	                                  </div>
-	                                </div>    
+	                            </div>    
 	        		        </div>
-	        		        
 	        		    </div>
 			        </div>
 			    </div>

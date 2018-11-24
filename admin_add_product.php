@@ -14,7 +14,7 @@ if (!isset($_SESSION['admin_name'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/admin.css">
+	<link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -68,23 +68,7 @@ if (!isset($_SESSION['admin_name'])) {
 			}
 	}
 ?>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-3 ">
-			     <div class="list-group ">
-	              <a href="" class="list-group-item list-group-item-action active">Product</a>
-	              <a href="admin.php" class="list-group-item list-group-item-action">All product</a>
-	              <a href="admin_add_product.php" class="list-group-item list-group-item-action">Add product</a>
-	              <a href="admin_oder.php" class="list-group-item list-group-item-action">Oder</a>
-	              <a href="admin_bill.php" class="list-group-item list-group-item-action">Bill</a>
-	              <a href="admin_statistic_product.php" class="list-group-item list-group-item-action">Statistic product</a>
-	              <a href="" class="list-group-item list-group-item-action active">User</a>
-	              <a href="admin_user.php" class="list-group-item list-group-item-action">Admin user</a>
-	              <a href="users.php" class="list-group-item list-group-item-action">user</a>
-	              <a href="admin_statistic_users.php" class="list-group-item list-group-item-action">Statistic user</a>
-	              <a href="logout.php" class="list-group-item list-group-item-action">Log out</a>	                            
-	            </div> 
-			</div>
+	<?php include 'admin_head_and_menu.php'; ?>
 			<div class="col-md-9">
 			    <div class="card">
 			        <div class="card-body">
@@ -93,9 +77,9 @@ if (!isset($_SESSION['admin_name'])) {
 			                    <h4>Add New Product</h4>
 			                </div>
 			                <div class="col-md-7">
-			                    <button type="button" class="btn btn-sm btn-primary">Add New</button>
+													<button type="button" class="btn btn-sm btn-primary">Add New</button>
+													<!-- chua su li si kien cho button nay -->
 			                </div>
-			                
 			            </div>
 			            <hr>
 			            <div class="row">
@@ -131,11 +115,11 @@ if (!isset($_SESSION['admin_name'])) {
 	                                	<div class="col-12">
 		                                 	<select name="group_species">
 		                                 		  <option value="snacks">snacks</option>
-												  <option value="drinks">drinks</option>
-												  <option value="milk tea">milk tea</option>
-												  <option value="fruits">fruits</option>
-												  <option value="Fruit beams">Fruit beams</option>
-												  <option value="other">other</option>
+																					<option value="drinks">drinks</option>
+																					<option value="milk tea">milk tea</option>
+																					<option value="fruits">fruits</option>
+																					<option value="Fruit beams">Fruit beams</option>
+																					<option value="other">other</option>
 		                                 	</select>
 		                                </div>
 		                             </div>

@@ -1,0 +1,19 @@
+#head-bar {
+    margin: 10px 0;
+}
+
+#nav-bar {
+}
+
+#logo-top {
+    height: 70px;
+}
+
+#name-page {
+    display: inline;
+}
+
+#img-user {
+    height: 50px;
+    float: right;
+}

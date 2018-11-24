@@ -9,29 +9,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<style type="text/css">
-		.login-form {
-			width: 340px;
-	    	margin: 50px auto;
-		}
-	    .login-form form {
-	    	margin-bottom: 15px;
-	        background: #f7f7f7;
-	        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	        padding: 30px;
-	    }
-	    .login-form h2 {
-	        margin: 0 0 15px;
-	    }
-	    .form-control, .btn {
-	        min-height: 38px;
-	        border-radius: 2px;
-	    }
-	    .btn {        
-	        font-size: 15px;
-	        font-weight: bold;
-	    }
-	</style>
+	<link rel="stylesheet" href="assets/css/login.css">
 </head>
 <body>
 	<?php
@@ -52,9 +30,10 @@
 		// echo '<pre>';
 		// print_r($admin_name); die;
 		$password = addslashes($password);
-			$sql = "select * from admin_user where admin_name = '$admin_name' and password = '$password' ";
-			$query = mysqli_query($conn,$sql);
-			$num_rows = mysqli_num_rows($query);
+			$sql = "select * from user where user_name = '$admin_name' and password = '$password'";
+			//$query = mysqli_query($conn,$sql);
+			$result = $conn->query($sql);
+			$num_rows = mysqli_num_rows($result);
 			if ($num_rows==0) {
 				?>
 				<script type="text/javascript">
@@ -66,10 +45,22 @@
 				/*if ($_POST["remenber_me"]==1) {
 					$_SESSION['admin_name'] = $admin_name;
 				}*/
+				while ($row = $result->fetch_assoc()): 
+					$_SESSION['role'] = $row['role'];
+					$_SESSION['image'] = $row['image'];
+				endwhile;
+				if($_SESSION['role']==1){
+					?>
+						<script type="text/javascript">
+							alert('yeu cau user co quyen cao hon !');
+						</script>
+					<?php
+				} else {
 				$_SESSION['admin_name'] = $admin_name;
-                // Thực thi hành động sau khi lưu thông tin vào session
-                //  tiến hành chuyển hướng trang web tới một trang gọi là index.php
-				header('Location: admin.php');
+					// Thực thi hành động sau khi lưu thông tin vào session
+					//  tiến hành chuyển hướng trang web tới một trang gọi là index.php
+					header('Location: admin.php');
+				}
 			}
 	}
 ?>
