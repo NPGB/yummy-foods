@@ -3,16 +3,21 @@
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>sign in admin page</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="assets/css/login.css">
+    <title>sign in admin page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
+
 <body>
-	<?php
+    <?php
 	//Gọi file connection.php 
 	require_once("lib/connection.php");
 	// Kiểm tra nếu người dùng đã ân nút đăng nhập thì mới xử lý
@@ -36,10 +41,10 @@
 			$num_rows = mysqli_num_rows($result);
 			if ($num_rows==0) {
 				?>
-				<script type="text/javascript">
-					alert('tên đăng nhập hoặc mật khẩu không đúng !');
-				</script>
-				<?php
+			<script type="text/javascript">
+				alert('tên đăng nhập hoặc mật khẩu không đúng !');
+			</script>
+    <?php
 			} else {
 				//tiến hành lưu tên đăng nhập vào session để tiện xử lý sau này
 				/*if ($_POST["remenber_me"]==1) {
@@ -48,13 +53,14 @@
 				while ($row = $result->fetch_assoc()): 
 					$_SESSION['role'] = $row['role'];
 					$_SESSION['image'] = $row['image'];
+					$_SESSION['user_id'] = $row['user_id'];
 				endwhile;
 				if($_SESSION['role']==1){
 					?>
-						<script type="text/javascript">
-							alert('yeu cau user co quyen cao hon !');
-						</script>
-					<?php
+    <script type="text/javascript">
+        alert('yeu cau user co quyen cao hon !');
+    </script>
+    <?php
 				} else {
 				$_SESSION['admin_name'] = $admin_name;
 					// Thực thi hành động sau khi lưu thông tin vào session
@@ -64,24 +70,27 @@
 			}
 	}
 ?>
-	<div class="login-form">
-	    <form action="login.php" method="POST">
-	        <h2 class="text-center">Log in</h2>       
-	        <div class="form-group">
-	            <input type="text" name="admin_name" class="form-control" placeholder="Username" required="required" maxlength="20" autofocus >
-	        </div>
-	        <div class="form-group">
-	            <input type="password" name="password" class="form-control" placeholder="Password" required="required" maxlength="20">
-	        </div>
-	        <div class="form-group">
-	            <button type="submit" name="submit" class="btn btn-primary btn-block">Log in</button>
-	        </div>
-	        <div class="clearfix">
-	            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-	            <a href="#" class="pull-right">Forgot Password?</a>
-	        </div>        
-	    </form>
-	    <p class="text-center"><a href="#">Create an Account</a></p>
-	</div>
+    <div class="login-form">
+        <form action="login.php" method="POST">
+            <h2 class="text-center">Log in</h2>
+            <div class="form-group">
+                <input type="text" name="admin_name" class="form-control" placeholder="Username" required="required"
+                    maxlength="20" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required="required"
+                    maxlength="20">
+            </div>
+            <div class="form-group">
+                <button type="submit" name="submit" class="btn btn-primary btn-block">Log in</button>
+            </div>
+            <div class="clearfix">
+                <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+                <a href="#" class="pull-right">Forgot Password?</a>
+            </div>
+        </form>
+        <p class="text-center"><a href="#">Create an Account</a></p>
+    </div>
 </body>
+
 </html>

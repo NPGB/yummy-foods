@@ -10,89 +10,101 @@ if (!isset($_SESSION['admin_name'])) {
 }
 ?>
 <html>
+
 <head>
-	<title>admin</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/admin.css">
-	<link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/admin_all_product.css">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <title>admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-<?php
+    <?php
 //Gọi file connection.php 
 	require_once("lib/connection.php");
-		// lấy thông tin 
-		// Kiểm tra nếu người dùng đã ân nút search thì mới xử lý
-		
-	if (isset($_POST["search"])) {
-		$name="";
-		$search_text=$_POST["search_text"];
-		if($_POST["name"]=="name") {
-			if($_POST["sort"]=="ASC") {
-				$name = "where `product_name` like '%$search_text%' ORDER BY `product_name` ASC";
-			} else {
-				$name = "where `product_name` like '%$search_text%' ORDER BY `product_name` DESC";
-			}
-		} 
-		if ($_POST["name"]=="group_species") {
-			if($_POST["sort"]=="ASC") {
-				$name = "where `group_species` like  '%$search_text%' ORDER BY `product_name` ASC";
-			} else {
-				$name = "where `group_species` like  '%$search_text%' ORDER BY `product_name` DESC";
-			}
-		}
-		if ($_POST["name"]=="price") {
-			if($_POST["sort"]=="ASC") {
-				$name = "where `product_price` <= $search_text ORDER BY `product_price` ASC";
-			} else {
-				$name = "where `product_price` <= $search_text ORDER BY `product_price` DESC";
-			}
-		}
-	}
-			$sql = "SELECT `product_id`, `product_name`, `product_price`, `unit`, `product_description`, `sold_out`, `group_species`, `supplier`, `img` FROM `product`	$name";
+    // list user
+        $user_id = $_SESSION['user_id'];
+			$sql = "SELECT * FROM `user` WHERE `user_id`= '${user_id}'";
 			$result = $conn->query($sql);// cach viet
 	//}
 ?>
-<?php include 'admin_head_and_menu.php'; ?>
-			<div class="col-md-9">
-			    <div class="card">
-			        <div class="card-body">
-			            <div class="row">
-			                <div class="col-md-3 border-right">
-			                    <h4>Add New Product</h4>
-			                </div>
-			                <div class="col-md-7">
-			                    <a href="admin_add_product.php"class="btn btn-sm btn-primary">Add New</a>
-			                </div>
-			                
-			            </div>
-			            <hr>
-			            <div class="row">
-			                <div class="col-md-8">
-	        		            <?php
-								if ($result->num_rows > 0) {
+    <?php include 'admin_head_and_menu.php'; ?>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 border-right">
+                        <h4>User Info</h4>
+                    </div>
+                    <div class="col-md-7">
+                        <button type="button" class="btn btn-sm btn-primary">??</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php
+                                    if ($result->num_rows > 0) {
+                                ?>
+                        <div>
+                            <?php
+								// Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
+								// do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
+								$row = $result->fetch_assoc();
 								?>
-									<div>
-									<?php
-									// Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
-									// do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
-									while ($row = $result->fetch_assoc()): 
-									?>
-										<div class="a-product">
-											<a href="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
-											<img class="img" src="assets/img/product/	<?php echo htmlspecialchars($row['img']) ?>" alt="<?php echo htmlspecialchars($row['img']) ?>">
-											</a>
-											<p class="text-name"><?php echo htmlspecialchars($row['product_name']); ?></p>
-											<p class="text-name">price: <?php echo htmlspecialchars($row['product_price']); ?>/<?php echo htmlspecialchars($row['unit']); ?><?php if($row['sold_out'] == 1 ) echo '<span  style="color: red;">  sold out</span>' ?></p>
-										</div>
-									<?php 
-										endwhile; 
-									?>
-									</div>
-									<?php
+                            <div class="a_user_name">
+                                <img class="img" style="max-width:400px;" src="assets/img/user/<?php echo htmlspecialchars($row['image']) ?>"
+                                    alt="<?php echo htmlspecialchars($row['image']) ?>">
+                                <form method="POST" action="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">User name:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="user_name" value="<?php echo htmlspecialchars($row["user_name"]) ?>" class="form-control here" required="required"
+                                            type="text" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">password:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="password" value="<?php echo htmlspecialchars($row["password"]) ?>" class="form-control here" required="required"
+                                            type="text" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">Address:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="address" value="<?php echo htmlspecialchars($row["address"]) ?>" class="form-control here" required="required"
+                                            type="text" maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">Number phone:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="number_phone" value="<?php echo htmlspecialchars($row["number_phone"]) ?>" class="form-control here" required="required"
+                                            type="number" maxlength="11">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">image:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="image" value="<?php echo htmlspecialchars($row["image"]) ?>" class="form-control here" type="text" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">role:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="role" value="<?php echo htmlspecialchars($row["role"]) ?>" class="form-control here" type="number" maxlength="10" >
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <?php
 								// Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
 								// Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
 								mysqli_free_result($query);
@@ -100,44 +112,49 @@ if (!isset($_SESSION['admin_name'])) {
 								else {
 									echo "There are no products";
 								}	
-							?>
-	        		        </div>
-	        		        <div class="col-md-4 ">
-							<!-- serach theo ten -->
-							<div class="card mb-3" style="max-width: 18rem;">
-								<div class="card-header bg-light ">name</div>
-								<div class="card-body">
-									<form action="admin.php" method="POST">
-										<div class="form-group row">
-											<div class="col-12">
-												<input id="search_text" name="search_text" placeholder=" "  class="form-control here" type="text">
-											</div>
-											<div class=" col-6">
-												<select name="sort" id="">
-													<option value="ASC" selected="selected">increase</option>
-													<option value="DESC">decrease</option>
-												</select>
-											</div>
-											<div class=" col-6">
-												<select name="name" id="">
-													<option value="name" selected="selected">name</option>
-													<option value="group_species">categories</option>
-													<option value="price">price</option>
-												</select>
-											</div>
-											<div class=" col-12">
-												<button name="search" type="search" class="btn btn-sm btn-outline-primary">search</button>
-											</div>
-										</div> 
-									</form>	
-								</div>
-							</div> 				
-	 		        	</div>
-	  		    	</div>
-			    </div>
-			</div>
-		</div>
-	</div>
-</div>
+								?>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="card mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-light ">Categories</div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <div class="col-9">
+                                            <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
+                                                type="text">
+                                        </div>
+                                        <div class=" col-2">
+                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="select" class="col-12 col-form-label">Select Category</label>
+                                        <div class="col-8">
+                                            <select id="select" name="select" class="custom-select" required="required">
+                                                <option value="rabbit">Rabbit</option>
+                                                <option value="duck">Duck</option>
+                                                <option value="fish">Fish</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer bg-light">
+                                <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </body>
+
 </html>

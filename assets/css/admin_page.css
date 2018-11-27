@@ -15,5 +15,8 @@
 
 #img-user {
     height: 50px;
-    float: right;
+}
+
+#user {
+	float: right;
 }

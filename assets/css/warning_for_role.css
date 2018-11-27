@@ -1,0 +1,15 @@
+.text {
+    margin: 50px auto;
+    height: 100px;
+    text-align: center;
+    font-size: 1.8em;
+    color: red;
+}
+
+.button {
+    text-align: center;
+}
+
+.bt1 {
+    margin-right: 30px;
+}
