@@ -61,90 +61,76 @@ if (!isset($_SESSION['admin_name'])) {
 	//}
 ?>
     <?php include 'admin_head_and_menu.php'; ?>
-    <div class="col-md-9">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3 border-right">
-                        <h4>Add New Product</h4>
+                    <div class="col-md-3 col-lg-2">
+                        <a href="admin_add_product.php" class="btn btn-sm btn-primary height-btn">Add New Product</a>
                     </div>
-                    <div class="col-md-7">
-                        <a href="admin_add_product.php" class="btn btn-sm btn-primary">Add New</a>
+                    <div class="col-md-9 col-lg-10">
+                        <!-- serach theo ten -->
+                        <form action="admin_all_products.php" method="POST">
+                            <div class="row">
+                                <div class="col-12 col-md-8 col-lg-5">
+                                    <input id="search_text" name="search_text" placeholder="search" class="form-control here"
+                                        type="text">
+                                </div>
+                                <div class=" col-6 col-md-4 col-lg-3">
+                                    <select name="sort" id="" class="custom-select">
+                                        <option value="ASC" selected="selected">increase</option>
+                                        <option value="DESC">decrease</option>
+                                    </select>
+                                </div>
+                                <div class=" col-6 col-md-4 col-lg-3">
+                                    <select name="name" id="" class="custom-select">
+                                        <option value="name" selected="selected">name</option>
+                                        <option value="group_species">categories</option>
+                                        <option value="price">price</option>
+                                    </select>
+                                </div>
+                                <div class=" col-12 col-md-4 col-lg-1   ">
+                                    <button name="search" type="search" class="btn btn-sm btn-outline-primary height-btn">search</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-8">
                         <?php
-								if ($result->num_rows > 0) {
-								?>
-                        <div>
-                            <?php
-									// Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
-									// do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
-									while ($row = $result->fetch_assoc()): 
-									?>
-                            <div class="a-product">
+                            if ($result->num_rows > 0) {
+                                // Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
+                                // do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
+                        while ($row = $result->fetch_assoc()): 
+                            ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                                 <a href="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
-                                    <img class="img" src="assets/img/product/	<?php echo htmlspecialchars($row['img']) ?>"
-                                        alt="<?php echo htmlspecialchars($row['img']) ?>">
-                                </a>
-                                <p class="text-name">
-                                    <?php echo htmlspecialchars($row['product_name']); ?>
-                                </p>
-                                <p class="text-name">price:
-                                    <?php echo htmlspecialchars($row['product_price']); ?>/
-                                    <?php echo htmlspecialchars($row['unit']); ?>
-                                    <?php if($row['sold_out'] == 1 ) echo '<span  style="color: red;">  sold out</span>' ?>
-                                </p>
-                            </div>
-                            <?php 
-										endwhile; 
-									?>
-                        </div>
-                        <?php
-								// Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
-								// Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
-								mysqli_free_result($query);
-								}
-								else {
-									echo "There are no products";
-								}	
-							?>
-                    </div>
-                    <div class="col-md-4 ">
-                        <!-- serach theo ten -->
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">name</div>
-                            <div class="card-body">
-                                <form action="admin_all_products.php" method="POST">
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <input id="search_text" name="search_text" placeholder=" " class="form-control here"
-                                                type="text">
-                                        </div>
-                                        <div class=" col-6">
-                                            <select name="sort" id="" class="custom-select">
-                                                <option value="ASC" selected="selected">increase</option>
-                                                <option value="DESC">decrease</option>
-                                            </select>
-                                        </div>
-                                        <div class=" col-6">
-                                            <select name="name" id="" class="custom-select">
-                                                <option value="name" selected="selected">name</option>
-                                                <option value="group_species">categories</option>
-                                                <option value="price">price</option>
-                                            </select>
-                                        </div>
-                                        <div class=" col-12">
-                                            <button name="search" type="search" class="btn btn-sm btn-outline-primary">search</button>
-                                        </div>
+                                    <div class="a-product">
+                                        <img class="img col-10" src="assets/img/product/	<?php echo htmlspecialchars($row['img']) ?>"
+                                            alt="<?php echo htmlspecialchars($row['img']) ?>">
+                                        <p class="text-name">
+                                            <?php echo htmlspecialchars($row['product_name']); ?>
+                                        </p>
+                                        <p class="text-name">price:
+                                            <?php echo htmlspecialchars($row['product_price']); ?>/
+                                            <?php echo htmlspecialchars($row['unit']); ?>
+                                            <?php if($row['sold_out'] == 1 ) echo '<span  style="color: red;">  sold out</span>' ?>
+                                        </p>
                                     </div>
-                                </form>
+                                </a>
                             </div>
-                        </div>
+                        <?php 
+                        endwhile; 
+                        // Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
+                        // Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
+                        mysqli_free_result($query);
+                        }
+                        else {
+                            echo "There are no products";
+                        }	
+                        ?>
                     </div>
+                    
                 </div>
             </div>
         </div>

@@ -35,7 +35,6 @@ if (!isset($_SESSION['admin_name'])) {
 	//}
 ?>
     <?php include 'admin_head_and_menu.php'; ?>
-    <div class="col-md-9">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -47,7 +46,7 @@ if (!isset($_SESSION['admin_name'])) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12   ">
                         <?php
                                     if ($result->num_rows > 0) {
                                 ?>
@@ -71,8 +70,8 @@ if (!isset($_SESSION['admin_name'])) {
                                     <div class="form-group row">
                                         <label for="text" class="col-12 col-form-label">password:</label>
                                         <div class="col-12">
-                                            <input id="text" name="password" value="<?php echo htmlspecialchars($row["password"]) ?>" class="form-control here" required="required"
-                                            type="text" maxlength="50">
+                                            <input id="text" name="password" value="chicken" class="form-control here" required="required"
+                                            type="password" maxlength="50" >
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -113,39 +112,6 @@ if (!isset($_SESSION['admin_name'])) {
 									echo "There are no products";
 								}	
 								?>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Categories</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group row">
-                                        <div class="col-9">
-                                            <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
-                                                type="text">
-                                        </div>
-                                        <div class=" col-2">
-                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form>
-                                    <div class="form-group row">
-                                        <label for="select" class="col-12 col-form-label">Select Category</label>
-                                        <div class="col-8">
-                                            <select id="select" name="select" class="custom-select" required="required">
-                                                <option value="rabbit">Rabbit</option>
-                                                <option value="duck">Duck</option>
-                                                <option value="fish">Fish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="card-footer bg-light">
-                                <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -36,7 +36,7 @@ if (!isset($_SESSION['admin_name'])) {
 	if (isset($_POST["add"])) {
 		// lấy thông tin 
 		$user_name = $_POST["user_name"];
-		$password = $_POST["password"];
+		$raw_password = $_POST["password"];
 		$image = $_POST["image"];
 		$address = $_POST["address"];
 		$number_phone = $_POST["number_phone"];
@@ -45,8 +45,8 @@ if (!isset($_SESSION['admin_name'])) {
 		//mà người dùng cố tình thêm vào để tấn công theo phương thức sql injection
 		$user_name = strip_tags($user_name);
 		$user_name  = addslashes($user_name );
-		$password = strip_tags($password);
-		$password = addslashes($password);
+		$raw_password = strip_tags($raw_password);
+		$raw_password = addslashes($raw_password);
 		$image = strip_tags($image);
 		$image = addslashes($image);
 		$address = strip_tags($address);
@@ -54,7 +54,9 @@ if (!isset($_SESSION['admin_name'])) {
 		$number_phone = strip_tags($number_phone);
 		$number_phone = addslashes($number_phone);
 		$role = strip_tags($role);
-		$role = addslashes($role);
+        $role = addslashes($role);
+        $config = include('config/config.php');
+        $password = sha1($raw_password.$config['key']);
         $user_id = $_GET["id"];
         //chuoi truy van
         $sql = "INSERT INTO `user`(`user_name`, `password`, `image`, `address`, `number_phone`, `role`) VALUES ('${user_name}','${password}','${image}','${address}','${number_phone}','${role}')";
@@ -75,7 +77,6 @@ if (!isset($_SESSION['admin_name'])) {
 	}
 ?>
     <?php include 'admin_head_and_menu.php'; ?>
-    <div class="col-md-9">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -88,95 +89,73 @@ if (!isset($_SESSION['admin_name'])) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-sm-12 col-lg-9">
                         <form method="POST" action="add_new_user.php">
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">User name:</label>
-                                <div class="col-12">
-                                    <input id="text" name="user_name" placeholder="Enter User Name" class="form-control here"
-                                        required="required" type="text" maxlength="50">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">User name:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="user_name" placeholder="Enter User Name" class="form-control here"
+                                                required="required" type="text" maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">password:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="password" placeholder="Enter Password" class="form-control here"
+                                                required="required" type="password" maxlength="50">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">password:</label>
-                                <div class="col-12">
-                                    <input id="text" name="password" placeholder="Enter Password" class="form-control here"
-                                        required="required" type="password" maxlength="50">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">Address:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="address" placeholder="Enter Your Address" class="form-control here"
+                                                required="required" type="text" maxlength="120">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">Number phone:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="number_phone" placeholder="Enter Your Number phone" class="form-control here"
+                                                required="required" type="number" maxlength="11">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">Address:</label>
-                                <div class="col-12">
-                                    <input id="text" name="address" placeholder="Enter Your Address" class="form-control here"
-                                        required="required" type="text" maxlength="120">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">image:</label>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="file" name="image"   class="form-control-file" id="exampleFormControlFile1">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">Number phone:</label>
-                                <div class="col-12">
-                                    <input id="text" name="number_phone" placeholder="Enter Your Number phone" class="form-control here"
-                                        required="required" type="number" maxlength="11">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">image:</label>
-                                <div class="col-12">
-                                    <input id="text" name="image" placeholder="Enter user image" class="form-control here"
-                                        type="text" maxlength="50">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">role:</label>
-                                <div class="col-12">
-                                    <input id="text" name="role" placeholder="Enter role" class="form-control here"
-                                        type="number" maxlength="10">
-                                </div>
-                                <div class="col-12">
-                                    <p>Tip: role = 1 user not login admin page</p>
-                                    <p>role = 2 user view only</p>
-                                    <p>role = 3</p>
-                                    <p>role = 4</p>
-                                    <p>role = 5 full(have view add edit delete other user )</p>
+                                <div class="col-md-2">
+                                    <div class="form-group row">
+                                        <label for="text" class="col-12 col-form-label">role:</label>
+                                        <div class="col-12">
+                                            <input id="text" name="role" placeholder="Enter role" class="form-control here"
+                                                type="number" maxlength="10">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="add" name="add" class="btn btn-sm btn-outline-primary" style="float: right;">add</button>
+                                <button type="add" name="add" class="btn btn-outline-primary" style="float: right;">add</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Categories</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group row">
-                                        <div class="col-9">
-                                            <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
-                                                type="text">
-                                        </div>
-                                        <div class=" col-2">
-                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                        </div>
-
-                                    </div>
-                                </form>
-                                <form>
-                                    <div class="form-group row">
-                                        <label for="select" class="col-12 col-form-label">Select Category</label>
-                                        <div class="col-8">
-                                            <select id="select" name="select" class="custom-select" required="required">
-                                                <option value="rabbit">Rabbit</option>
-                                                <option value="duck">Duck</option>
-                                                <option value="fish">Fish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="card-footer bg-light">
-                                <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

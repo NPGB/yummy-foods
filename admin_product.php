@@ -119,194 +119,133 @@ if (!isset($_SESSION['admin_name'])) {
     }
     // list san pham neu co
         $id = $_GET["id"];
-			$sql = "SELECT `product_id`, `product_name`, `product_price`, `unit`, `product_description`, `sold_out`, `group_species`, `supplier`, `img` FROM `product` WHERE `product_id`= '${id}'";
+			$sql = "SELECT *     FROM `product` WHERE `product_id`= '${id}'";
 			$result = $conn->query($sql);// cach viet
 	//}
 ?>
     <?php include 'admin_head_and_menu.php'; ?>
-    <div class="col-md-9">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 border-right">
-                        <h4>Add New Post</h4>
-                    </div>
-                    <div class="col-md-7">
-                        <button type="button" class="btn btn-sm btn-primary">Add New</button>
-                    </div>
-
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-8">
-                        <?php
-                                    if ($result->num_rows > 0) {
-                                    ?>
-                        <div>
-                            <?php
-                                        // Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
-                                        // do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
-                                        $row = $result->fetch_assoc();
-                                        ?>
-                            <div class="a-product">
-                                <img class="img" style="max-width:400px;" src="assets/img/product/<?php echo htmlspecialchars($row['img']) ?>"
-                                    alt="<?php echo htmlspecialchars($row['img']) ?>">
-                                <form method="POST" action="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">Product Name:</label>
-                                        <div class="col-12">
-                                            <input id="text" name="product_name" value="<?php echo htmlspecialchars($row["product_name"]) ?>" class="form-control here" required="required"
-                                            type="text" maxlength="100">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">Product Price 1 unit:</label>
-                                        <div class="col-12">
-                                            <input id="number" name="product_price" value="<?php echo htmlspecialchars($row["product_price"]) ?>" class="form-control here" required="required"
-                                            type="text" min="1000" max="100000">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">Unit:</label>
-                                        <div class="col-12">
-                                            <input id="text" name="unit" value="<?php echo htmlspecialchars($row["unit"]) ?>" class="form-control here" required="required" type="text"
-                                            maxlength="50">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">sold_out:</label>
-                                        <div class="col-12">
-                                            <input type="radio" name="sold_out" value="1" <?php if($row["sold_out"]==1)
-                                                echo "checked=\" checked\"" ?>>True
-                                            <input type="radio" name="sold_out" value="0" <?php if($row["sold_out"]==0)
-                                                echo "checked=\" checked\"" ?>>False
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">group_species:</label>
-                                        <div class="col-12">
-                                            <select name="group_species" class="custom-select">
-                                                <option value="snacks" <?php if($row["group_species"]=="snacks" ) echo
-                                                    "selected=\" selected\"" ?>>snacks</option>
-                                                <option value="drinks" <?php if($row["group_species"]=="drinks" ) echo
-                                                    "selected=\" selected\"" ?>>drinks</option>
-                                                <option value="milk tea" <?php if($row["group_species"]=="milk tea" )
-                                                    echo "selected=\" selected\"" ?>>milk tea</option>
-                                                <option value="fruits" <?php if($row["group_species"]=="fruits" ) echo
-                                                    "selected=\" selected\"" ?>>fruits</option>
-                                                <option value="Fruit beams" <?php if($row["group_species"]=="Fruit beams"
-                                                    ) echo "selected=\" selected\"" ?>>Fruit beams</option>
-                                                <option value="other" <?php if($row["group_species"]=="other" ) echo
-                                                    "selected=\" selected\"" ?>>other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">supplier:</label>
-                                        <div class="col-12">
-                                            <input id="text" name="supplier" value="<?php echo htmlspecialchars($row["supplier"]) ?>" class="form-control here" type="text" maxlength="50">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">Image of Product:</label>
-                                        <div class="col-12">
-                                            <input id="text" name="img" value="<?php echo htmlspecialchars($row["img"]) ?>" class="form-control here" type="text" maxlength="30" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="textarea" class="col-12 col-form-label">Product Description:</label>
-                                        <div class="col-12">
-                                            <textarea id="textarea" name="product_description" placeholder="<?php echo htmlspecialchars($row["product_description"]) ?>" cols="40" rows="5" class="form-control" maxlength="1000"></textarea>
-                                        </div>
-                                    </div>
+                <h4>chi tiet san pham</h4>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <?php
+                        if ($result->num_rows > 0) {
+                            // Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
+                            // do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
+                            $row = $result->fetch_assoc();
+                            ?>
+                        <div class="a-product">
+                            <form method="POST" action="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
+                                <div class="form-group row">
+                                    <label for="text" class="col-12 col-form-label">Product Name:</label>
                                     <div class="col-12">
-                                        <button type="add" name="delete" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
-                                        <button type="add" name="edit" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
+                                        <input id="text" name="product_name" value="<?php echo htmlspecialchars($row["product_name"]) ?>" class="form-control here" required="required"
+                                        type="text" maxlength="100">
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                        <?php
-                                    // Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
-                                    // Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
-                                    mysqli_free_result($query);
-                                    }
-                                    else {
-                                        echo "There are no products";
-                                    }	
-                                ?>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Publish</div>
-                            <div class="card-body">
-
-                            </div>
-                            <div class="card-footer bg-light">
-                                <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button>
-                                <button type="button" class="btn btn-info btn-sm">Save Draft</button>
-                                <button type="button" class="btn btn-primary btn-sm">Publish</button>
-                            </div>
-                        </div>
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Tags</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group row">
-                                        <div class="col-9">
-                                            <input id="tags" name="tags" placeholder="seperate with commas" required="required"
-                                                class="form-control here" type="text">
-                                        </div>
-                                        <div class=" col-2">
-                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <small>Seperate Tags with commas</small>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group row">
+                                            <label for="text" class="col-12 col-form-label">Product Price 1 unit:</label>
+                                            <div class="col-12">
+                                                <input id="number" name="product_price" value="<?php echo htmlspecialchars($row["product_price"]) ?>" class="form-control here" required="required"
+                                                type="text" min="1000" max="100000">
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-
-
-                            </div>
-                            <div class="card mb-3" style="max-width: 18rem;">
-                                <div class="card-header bg-light ">Categories</div>
-                                <div class="card-body">
-                                    <form>
+                                    <div class="col-6 col-md-4">
                                         <div class="form-group row">
-                                            <div class="col-9">
-                                                <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
-                                                    type="text">
+                                            <label for="text" class="col-12 col-form-label">Unit:</label>
+                                            <div class="col-12">
+                                                <input id="text" name="unit" value="<?php echo htmlspecialchars($row["unit"]) ?>" class="form-control here" required="required" type="text"
+                                                maxlength="50">
                                             </div>
-                                            <div class=" col-2">
-                                                <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                            </div>
-
                                         </div>
-                                    </form>
-                                    <form>
+                                    </div>
+                                    <div class="col-6 col-md-4">
                                         <div class="form-group row">
-                                            <label for="select" class="col-12 col-form-label">Select Category</label>
-                                            <div class="col-8">
-                                                <select id="select" name="select" class="custom-select" required="required">
-                                                    <option value="rabbit">Rabbit</option>
-                                                    <option value="duck">Duck</option>
-                                                    <option value="fish">Fish</option>
+                                            <label for="text" class="col-12 col-form-label">sold_out:</label>
+                                            <div class="col-12">
+                                                <input type="radio" name="sold_out" value="1" <?php if($row["sold_out"]==1)
+                                                    echo "checked=\" checked\"" ?>>True
+                                                <input type="radio" name="sold_out" value="0" <?php if($row["sold_out"]==0)
+                                                    echo "checked=\" checked\"" ?>>False
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group row">
+                                            <label for="text" class="col-12 col-form-label">group_species:</label>
+                                            <div class="col-12">
+                                                <select name="group_species" class="custom-select">
+                                                    <option value="snacks" <?php if($row["group_species"]=="snacks" ) echo
+                                                        "selected=\" selected\"" ?>>snacks</option>
+                                                    <option value="drinks" <?php if($row["group_species"]=="drinks" ) echo
+                                                        "selected=\" selected\"" ?>>drinks</option>
+                                                    <option value="milk tea" <?php if($row["group_species"]=="milk tea" )
+                                                        echo "selected=\" selected\"" ?>>milk tea</option>
+                                                    <option value="fruits" <?php if($row["group_species"]=="fruits" ) echo
+                                                        "selected=\" selected\"" ?>>fruits</option>
+                                                    <option value="Fruit beams" <?php if($row["group_species"]=="Fruit beams"
+                                                        ) echo "selected=\" selected\"" ?>>Fruit beams</option>
+                                                    <option value="other" <?php if($row["group_species"]=="other" ) echo
+                                                        "selected=\" selected\"" ?>>other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group row">
+                                            <label for="text" class="col-12 col-form-label">supplier:</label>
+                                            <div class="col-12">
+                                                <input id="text" name="supplier" value="<?php echo htmlspecialchars($row["supplier"]) ?>" class="form-control here" type="text" maxlength="50">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer bg-light">
-                                    <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
+                                <div class="form-group row">
+                                    <label for="text" class="col-12 col-form-label">Image of Product:</label>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="file" name="img"  placeholder="choose img"  value="<?php echo htmlspecialchars($row["img"]) ?>" class="form-control-file" id="exampleFormControlFile1">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label for="textarea" class="col-12 col-form-label">Product Description:</label>
+                                    <div class="col-12">
+                                        <textarea id="textarea" name="product_description" placeholder="<?php echo htmlspecialchars($row["product_description"]) ?>" cols="40" rows="5" class="form-control" maxlength="1000"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="add" name="delete" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
+                                    <button type="add" name="edit" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
+                                </div>
+                            </form>
                         </div>
-                    </div>
+                    <?php
+                        // Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
+                        // Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
+                        mysqli_free_result($query);
+                        }
+                        else {
+                            echo "There are no products";
+                        }	
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <img class="img" style="width:100%;" src="assets/img/product/<?php echo htmlspecialchars($row['img']) ?>"
+                    alt="<?php echo htmlspecialchars($row['img']) ?>">
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
+</div>
 </body>
 
 </html>

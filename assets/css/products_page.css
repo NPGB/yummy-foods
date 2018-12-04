@@ -1,0 +1,25 @@
+.direct-bar {
+}
+
+#search {
+    float: right;
+}
+
+.img-att {
+    margin: 10px 0;
+    max-width: -webkit-fill-available;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.content-center {
+    text-align: center;
+}
+
+.content-align {
+    margin: 10px 0;
+}
+
+.text-att {
+    font-family: 'serif', Courier, monospace;
+}

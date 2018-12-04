@@ -39,7 +39,6 @@ if (!isset($_SESSION['admin_name'])) {
 	//}
 ?>
     <?php include 'admin_head_and_menu.php'; ?>
-    <div class="col-md-9">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -50,18 +49,17 @@ if (!isset($_SESSION['admin_name'])) {
                         <a href="add_new_user.php" class="btn btn-sm btn-primary">Add New</a>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-8">
+                <div class="">
                         <?php
 							if ($result->num_rows > 0) {
 							?>
-                        <div>
+                        <div class="row">
                             <?php
 								// Hàm `mysql_fetch_row()` sẽ chỉ fetch dữ liệu một record mỗi lần được gọi
 								// do đó cần sử dụng vòng lặp While để lặp qua toàn bộ dữ liệu trên bảng posts
 								while ($row = $result->fetch_assoc()): 
 							?>
-                            <div class="a-product">
+                            <div class="col-12 col-sm-4 col-md-3 col-lg-2">
                                 <a href="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>">
                                     <img class="img" src="assets/img/user/<?php echo htmlspecialchars($row['image']) ?>"
                                         alt="<?php echo htmlspecialchars($row['image']) ?>">
@@ -83,45 +81,6 @@ if (!isset($_SESSION['admin_name'])) {
 									echo "There are no products";
 								}	
 							?>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Categories</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group row">
-                                        <div class="col-9">
-                                            <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
-                                                type="text">
-                                        </div>
-                                        <div class=" col-2">
-                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form>
-                                    <div class="form-group row">
-                                        <label for="select" class="col-12 col-form-label">Select Category</label>
-                                        <div class="col-8">
-                                            <select id="select" name="select" class="custom-select" required="required">
-                                                <option value="rabbit">Rabbit</option>
-                                                <option value="duck">Duck</option>
-                                                <option value="fish">Fish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Featured Image</div>
-                            <div class="card-body">
-                            </div>
-                            <div class="card-footer bg-light">
-                                <a href="#">Set Featured Image</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

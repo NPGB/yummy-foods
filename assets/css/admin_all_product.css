@@ -1,8 +1,4 @@
-.a-product {
-    display: block;
-    width: 50%;
-    float: left;
-}
+
 
 .img {
     display: block;
@@ -12,4 +8,8 @@
 
 .text-name {
     text-align: center;
+}
+
+.height-btn {
+    height: 38px;
 }

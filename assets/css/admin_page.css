@@ -1,16 +1,11 @@
-#head-bar {
-    margin: 10px 0;
-}
-
-#nav-bar {
-}
-
-#logo-top {
+.height{
     height: 70px;
 }
 
 #name-page {
     display: inline;
+    vertical-align: middle;
+    font-size: 1.5em;
 }
 
 #img-user {

@@ -1,0 +1,52 @@
+.logo {
+    max-width: 38px;
+    position: relative;
+    transform: scale(2)
+}
+
+.none-decoration:hover {
+    text-decoration: none;
+}
+
+.block {
+    display: inline-block;
+}
+
+
+.tagmenu:hover div.sub-menu5 {
+    display: block;
+}
+
+.tagmenu1:hover div.sub-menu1 {
+    display: block;
+}
+.tagmenu2:hover div.sub-menu2 {
+    display: block;
+}
+.tagmenu3:hover div.sub-menu3 {
+    display: block;
+}
+.tagmenu4:hover div.sub-menu4 {
+    display: block;
+}
+
+.sub-menu {
+    display:none;
+    position: absolute;
+    z-index: 10;
+    background-color: #f8f9fa;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border: 1px solid #a0a0a0;
+    border-radius: 5px;
+}
+
+.sub-menu-a  {
+    padding: 8px 30px;
+    display: block;
+}
+
+.sub-menu-a:hover {
+    background-color: #17a2b8;
+    color: #ffffff;
+}

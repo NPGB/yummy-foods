@@ -1,5 +1,9 @@
 <?php
 	session_start(); /*khoi tao session de su dung*/
+	if(isset($_SESSION['admin_name'])) {
+		header('Location: admin.php');
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,17 +28,19 @@
 	if (isset($_POST["submit"])) {
 		// lấy thông tin người dùng
 		$admin_name = $_POST["admin_name"];
-		$password = $_POST["password"];
+		$raw_password = $_POST["password"];
 		//làm sạch thông tin, xóa bỏ các tag html, ký tự đặc biệt 
 		//mà người dùng cố tình thêm vào để tấn công theo phương thức sql injection
 		$admin_name = strip_tags($admin_name);
 		$admin_name = addslashes($admin_name);
-		$password = strip_tags($password);
-		$password = addslashes($password);
+		$raw_password = strip_tags($raw_password);
+		$raw_password = addslashes($raw_password);
+		
 		// debug error
 		// echo '<pre>';
 		// print_r($admin_name); die;
-		$password = addslashes($password);
+		$config = include('config/config.php');
+        $password = sha1($raw_password.$config['key']);
 			$sql = "select * from user where user_name = '$admin_name' and password = '$password'";
 			//$query = mysqli_query($conn,$sql);
 			$result = $conn->query($sql);
