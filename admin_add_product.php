@@ -20,6 +20,7 @@ if (!isset($_SESSION['admin_name'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -38,7 +39,7 @@ if (!isset($_SESSION['admin_name'])) {
 		$product_price = $_POST["product_price"];
 		$unit = $_POST["unit"];
 		$product_description = $_POST["product_description"];
-		$sold_out = $_POST["sold_out"];
+		$amount = $_POST["amount"];
 		$group_species = $_POST["group_species"];
 		$supplier = $_POST["supplier"];
 		$img = $_POST["img"];
@@ -52,15 +53,18 @@ if (!isset($_SESSION['admin_name'])) {
 		$unit = addslashes($unit);
 		$product_description = strip_tags($product_description);
 		$product_description = addslashes($product_description);
-		$sold_out = strip_tags($sold_out);
-		$sold_out = addslashes($sold_out);
+		$amount = strip_tags($amount);
+		$amount = addslashes($amount);
 		$group_species = strip_tags($group_species);
 		$group_species = addslashes($group_species);
 		$supplier = strip_tags($supplier);
 		$supplier = addslashes($supplier);
 		$img = strip_tags($img);
-		$img = addslashes($img);
-            $sql = "INSERT INTO `product`(`product_name`, `product_price`, `unit`, `product_description`, `sold_out`, `group_species`, `supplier`, `img`) VALUES ('${product_name}', '${product_price}', '${unit}', '${product_description}', '${sold_out}', '${group_species}', '${supplier}', '${img}')";
+        $img = addslashes($img);
+        if ($img==null) {
+            $img = 'noimg.png';
+        }
+            $sql = "INSERT INTO `product`(`product_name`, `product_price`, `unit`, `product_description`, `amount`, `group_species`, `supplier`, `img`) VALUES ('${product_name}', '${product_price}', '${unit}', '${product_description}', '${amount}', '${group_species}', '${supplier}', '${img}')";
 			$query = mysqli_query($conn,$sql);
 			if ($query) {
 				?>
@@ -121,10 +125,9 @@ if (!isset($_SESSION['admin_name'])) {
                                 </div>
                                 <div class="col-6 col-md-4">
                                     <div class="form-group row">
-                                        <label for="text" class="col-12 col-form-label">sold_out:</label>
+                                        <label for="text" class="col-12 col-form-label">amount:</label>
                                         <div class="col-12">
-                                            <input type="radio" name="sold_out" value="1" required="">True
-                                            <input type="radio" name="sold_out" value="0" required="" checked="checked">False
+                                        <input id="text" name="amount" value="0" class="form-control here" required="required" type="number">
                                         </div>
                                     </div>
                                 </div>

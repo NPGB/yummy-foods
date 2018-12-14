@@ -1,0 +1,30 @@
+.img-pr {
+    float: right;
+    max-width: 100%;
+}
+
+.detail {
+    margin-left: 10%;
+}
+
+
+.input-number {
+    padding: .375rem .75rem;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+.line-block {
+    display: inline-block;
+}
+
+.max-w {
+    max-width: 90px;
+}
+
+.vertical-mid {
+    vertical-align: middle;
+}
+
+.icon-cart {
+    font-size: 40px;
+}

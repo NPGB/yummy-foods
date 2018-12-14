@@ -20,8 +20,8 @@ if (!isset($_SESSION['admin_name'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/admin.css">
     <link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
     <link rel="stylesheet" type="text/css" href="assets/css/admin_all_product.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -56,7 +56,7 @@ if (!isset($_SESSION['admin_name'])) {
 			}
 		}
 	}
-			$sql = "SELECT `product_id`, `product_name`, `product_price`, `unit`, `product_description`, `sold_out`, `group_species`, `supplier`, `img` FROM `product`	$name";
+			$sql = "SELECT `product_id`, `product_name`, `product_price`, `unit`, `quantity`, `img` FROM `product` $name ORDER BY `product`.`quantity` ASC";
 			$result = $conn->query($sql);// cach viet
 	//}
 ?>
@@ -106,15 +106,15 @@ if (!isset($_SESSION['admin_name'])) {
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                                 <a href="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
                                     <div class="a-product">
-                                        <img class="img col-10" src="assets/img/product/	<?php echo htmlspecialchars($row['img']) ?>"
-                                            alt="<?php echo htmlspecialchars($row['img']) ?>">
+                                        <img class="img col-10" src="assets/img/product/<?php echo htmlspecialchars($row['img']) ?>"
+                                            alt="<?php echo htmlspecialchars($row['product_name']); ?> img" >
                                         <p class="text-name">
                                             <?php echo htmlspecialchars($row['product_name']); ?>
                                         </p>
-                                        <p class="text-name">price:
+                                        <p class="text-name">
+                                            <?php if($row['quantity'] == 0 ) {echo '<span  style="color: red;">  sold out</span>';} else {?>price:
                                             <?php echo htmlspecialchars($row['product_price']); ?>/
-                                            <?php echo htmlspecialchars($row['unit']); ?>
-                                            <?php if($row['sold_out'] == 1 ) echo '<span  style="color: red;">  sold out</span>' ?>
+                                            <?php echo htmlspecialchars($row['unit']); } ?>
                                         </p>
                                     </div>
                                 </a>

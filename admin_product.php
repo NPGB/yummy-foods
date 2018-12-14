@@ -22,6 +22,7 @@ if (!isset($_SESSION['admin_name'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -36,21 +37,15 @@ if (!isset($_SESSION['admin_name'])) {
             header('location: warning_for_role.php');
             exit();
         }
-        // hoi lai co chac muon edit
-        ?>
-    <script type="text/javascript">
-        alert('Are you sure you want to edit this product?');
-    </script>
-    <?php
 		// lấy thông tin 
 		$product_name = $_POST["product_name"];
 		$product_price = $_POST["product_price"];
 		$unit = $_POST["unit"];
 		$product_description = $_POST["product_description"];
-		$sold_out = $_POST["sold_out"];
+		$quantity = $_POST["quantity"];
 		$group_species = $_POST["group_species"];
 		$supplier = $_POST["supplier"];
-		$img = $_POST["img"];
+        $img = $_POST["img"];
 		//làm sạch thông tin, xóa bỏ các tag html, ký tự đặc biệt 
 		//mà người dùng cố tình thêm vào để tấn công theo phương thức sql injection
 		$product_name = strip_tags($product_name);
@@ -61,8 +56,8 @@ if (!isset($_SESSION['admin_name'])) {
 		$unit = addslashes($unit);
 		$product_description = strip_tags($product_description);
 		$product_description = addslashes($product_description);
-		$sold_out = strip_tags($sold_out);
-		$sold_out = addslashes($sold_out);
+		$quantity = strip_tags($quantity);
+		$quantity = addslashes($quantity);
 		$group_species = strip_tags($group_species);
 		$group_species = addslashes($group_species);
 		$supplier = strip_tags($supplier);
@@ -70,7 +65,11 @@ if (!isset($_SESSION['admin_name'])) {
 		$img = strip_tags($img);
         $img = addslashes($img);
         $id = $_GET["id"];
-			$sql = "UPDATE `product` SET `product_name`='${product_name}',`product_price`='${product_price}',`unit`='${unit}',`product_description`='${product_description}',`sold_out`='${sold_out}',`group_species`='${group_species}',`supplier`='${supplier}',`img`='${img}' WHERE `product_id` = '${id}'";
+		if ($img == null) {
+            $sql = "UPDATE `product` SET `product_name`='${product_name}',`product_price`='${product_price}',`unit`='${unit}',`product_description`='${product_description}',`quantity`='${quantity}',`group_species`='${group_species}',`supplier`='${supplier}' WHERE `product_id` = '${id}'";
+        } else {
+            $sql = "UPDATE `product` SET `product_name`='${product_name}',`product_price`='${product_price}',`unit`='${unit}',`product_description`='${product_description}',`quantity`='${quantity}',`group_species`='${group_species}',`supplier`='${supplier}',`img`='${img}' WHERE `product_id` = '${id}'";
+        }
 			$query = mysqli_query($conn,$sql);
 			if ($query) {
 				?>
@@ -93,12 +92,6 @@ if (!isset($_SESSION['admin_name'])) {
             header('location: warning_for_role.php');
             exit();
         }
-        // hoi lai co chac muon delete
-        ?>
-    <script type="text/javascript">
-        alert('Are you sure you want to delete this product?');
-    </script>
-    <?php
         $id = $_GET["id"];
 			$sql = "DELETE FROM `product` WHERE  `product_id` = '${id}'";
 			$query = mysqli_query($conn,$sql);
@@ -137,7 +130,7 @@ if (!isset($_SESSION['admin_name'])) {
                             $row = $result->fetch_assoc();
                             ?>
                         <div class="a-product">
-                            <form method="POST" action="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>">
+                            <form method="POST" action="admin_product.php?id=<?php echo htmlspecialchars($row['product_id']) ?>" onSubmit="return confirmED()">
                                 <div class="form-group row">
                                     <label for="text" class="col-12 col-form-label">Product Name:</label>
                                     <div class="col-12">
@@ -166,12 +159,9 @@ if (!isset($_SESSION['admin_name'])) {
                                     </div>
                                     <div class="col-6 col-md-4">
                                         <div class="form-group row">
-                                            <label for="text" class="col-12 col-form-label">sold_out:</label>
+                                            <label for="text" class="col-12 col-form-label">quantity:</label>
                                             <div class="col-12">
-                                                <input type="radio" name="sold_out" value="1" <?php if($row["sold_out"]==1)
-                                                    echo "checked=\" checked\"" ?>>True
-                                                <input type="radio" name="sold_out" value="0" <?php if($row["sold_out"]==0)
-                                                    echo "checked=\" checked\"" ?>>False
+                                            <input id="text" name="quantity" value="<?php echo htmlspecialchars($row["quantity"]) ?>" class="form-control here" required="required" type="number">
                                             </div>
                                         </div>
                                     </div>
@@ -222,14 +212,13 @@ if (!isset($_SESSION['admin_name'])) {
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button type="add" name="delete" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
-                                    <button type="add" name="edit" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
+                                    <button type="add" name="delete" onclick="funcDelete()" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
+                                    <button type="add" name="edit" onclick="funcEdit()" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
                                 </div>
                             </form>
                         </div>
                     <?php
                         // Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
-                        // Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
                         mysqli_free_result($query);
                         }
                         else {
@@ -239,13 +228,27 @@ if (!isset($_SESSION['admin_name'])) {
                 </div>
                 <div class="col-md-4">
                     <img class="img" style="width:100%;" src="assets/img/product/<?php echo htmlspecialchars($row['img']) ?>"
-                    alt="<?php echo htmlspecialchars($row['img']) ?>">
+                    alt="<?php echo htmlspecialchars($row['product_name']); ?> img">
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
+<script>
+    var noti = '';
+    function funcDelete() {
+        noti='are you sure delete this product';
+    }
+
+    function funcEdit() {
+        noti='are you sure edit this product';
+    }
+
+    function confirmED() {
+        return confirm(noti);
+    }
+</script>
 </body>
 
 </html>

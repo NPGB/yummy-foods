@@ -21,6 +21,7 @@ if (!isset($_SESSION['admin_name'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -58,6 +59,9 @@ if (!isset($_SESSION['admin_name'])) {
         $config = include('config/config.php');
         $password = sha1($raw_password.$config['key']);
         $user_id = $_GET["id"];
+        if ($image==null) {
+            $image = 'default-user.png';
+        }
         //chuoi truy van
         $sql = "INSERT INTO `user`(`user_name`, `password`, `image`, `address`, `number_phone`, `role`) VALUES ('${user_name}','${password}','${image}','${address}','${number_phone}','${role}')";
         $query = mysqli_query($conn,$sql);
@@ -147,7 +151,7 @@ if (!isset($_SESSION['admin_name'])) {
                                         <label for="text" class="col-12 col-form-label">role:</label>
                                         <div class="col-12">
                                             <input id="text" name="role" placeholder="Enter role" class="form-control here"
-                                                type="number" maxlength="10">
+                                                type="number" maxlength="10" required="required">
                                         </div>
                                     </div>
                                 </div>

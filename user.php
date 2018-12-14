@@ -19,9 +19,8 @@ if (!isset($_SESSION['admin_name'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/user.css">
     <link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous">
-    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -38,12 +37,6 @@ if (!isset($_SESSION['admin_name'])) {
 	// Kiểm tra nếu người dùng đã ân nút Add thì mới xử lý
     //kiem tra nguoi dung chon edit thi
     if (isset($_POST["edit"])) {
-        // hoi lai co chac muon edit
-        ?>
-    <script type="text/javascript">
-        alert('Are you sure you want to edit this user?');
-    </script>
-    <?php
 		// lấy thông tin 
 		$user_name = $_POST["user_name"];
 		$raw_password = $_POST["password"];
@@ -68,7 +61,11 @@ if (!isset($_SESSION['admin_name'])) {
         $config = include('config/config.php');
         $password = sha1($raw_password.$config['key']);
         $user_id = $_GET["id"];
-			$sql = "UPDATE `user` SET `user_name`='${user_name}',`password`='${password}',`image`='${image}',`address`='${address}',`number_phone`='${number_phone}',`role`='${role}' WHERE `user_id` = '${user_id}'";
+        if ($image==null) {
+            $sql = "UPDATE `user` SET `user_name`='${user_name}',`password`='${password}',`address`='${address}',`number_phone`='${number_phone}',`role`='${role}' WHERE `user_id` = '${user_id}'";
+        } else {
+            $sql = "UPDATE `user` SET `user_name`='${user_name}',`password`='${password}',`image`='${image}',`address`='${address}',`number_phone`='${number_phone}',`role`='${role}' WHERE `user_id` = '${user_id}'";
+        }
 			$query = mysqli_query($conn,$sql);
 			if ($query) {
 				?>
@@ -86,12 +83,6 @@ if (!isset($_SESSION['admin_name'])) {
     }
     // kiem tra neu la delete thi thuc hien
     if (isset($_POST["delete"])) {
-        // hoi lai co chac muon delete
-        ?>
-    <script type="text/javascript">
-        alert('Are you sure you want to delete this user?');
-    </script>
-    <?php
         $user_id = $_GET["id"];
 	$sql = "DELETE FROM `user` WHERE `user_id` = '${user_id}'";
 			$query = mysqli_query($conn,$sql);
@@ -136,7 +127,7 @@ if (!isset($_SESSION['admin_name'])) {
                     ?>
                     <div class="row">
                         <div class="col-md-12 col-lg-9">
-                            <form method="POST" action="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>">
+                            <form method="POST" action="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>" onSubmit="return confirmED()">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
@@ -198,8 +189,8 @@ if (!isset($_SESSION['admin_name'])) {
                                    </div>
                                </div>
                                 <div class="">
-                                    <button type="add" name="delete" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
-                                    <button type="add" name="edit" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
+                                    <button type="add" name="delete" onclick="funcDelete()" class="btn btn-sm btn-outline-danger" style="float: right;">Delete</button>
+                                    <button type="add" name="edit" onclick="funcEdit()" class="btn btn-sm btn-outline-warning" style="float: right;">Edit</button>
                                 </div>
                             </form>
                         </div>
@@ -225,6 +216,20 @@ if (!isset($_SESSION['admin_name'])) {
 </div>
 </div>
 </div>
+<script>
+    var noti = '';
+    function funcDelete() {
+        noti='are you sure delete this user';
+    }
+
+    function funcEdit() {
+        noti='are you sure edit this user';
+    }
+
+    function confirmED() {
+        return confirm(noti);
+    }
+</script>
 </body>
 
 </html>

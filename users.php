@@ -19,8 +19,8 @@ if (!isset($_SESSION['admin_name'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
     <link rel="stylesheet" type="text/css" href="assets/css/users.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -46,7 +46,7 @@ if (!isset($_SESSION['admin_name'])) {
                         <h4>Add New User</h4>
                     </div>
                     <div class="col-md-7">
-                        <a href="add_new_user.php" class="btn btn-sm btn-primary">Add New</a>
+                        <a href="add_new_user.php" class="btn btn-sm btn-primary"><i class="fas fa-user-plus"></i> Add New</a>
                     </div>
                 </div>
                 <div class="">
@@ -63,10 +63,11 @@ if (!isset($_SESSION['admin_name'])) {
                                 <a href="user.php?id=<?php echo htmlspecialchars($row['user_id']) ?>">
                                     <img class="img" src="assets/img/user/<?php echo htmlspecialchars($row['image']) ?>"
                                         alt="<?php echo htmlspecialchars($row['image']) ?>">
+                                    <p class="text-name">
+                                        <?php echo htmlspecialchars($row['user_name']); ?>
+                                    </p>
                                 </a>
-                                <p class="text-name">
-                                    <?php echo htmlspecialchars($row['user_name']); ?>
-                                </p>
+                                
                             </div>
                             <?php 
 								endwhile; 
@@ -77,9 +78,6 @@ if (!isset($_SESSION['admin_name'])) {
 								// Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
 								mysqli_free_result($query);
 								}
-								else {
-									echo "There are no products";
-								}	
 							?>
                 </div>
             </div>

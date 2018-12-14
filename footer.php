@@ -1,9 +1,9 @@
-<div class="container">
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+<footer class="container">
+    <div class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md">
                 <img class="mb-2" src="assets/img/<?php echo $config['logo']; ?>" alt="" width="50" height="50">
-                <small class="d-block mb-3 text-muted">NPGB &copy; 2017-2018</small>
+                <small class="d-block mb-3 text-muted">NPGB &copy; 2018</small>
             </div>
             <?php
                 foreach ($footer as $h5 => $array) {
@@ -24,5 +24,5 @@
                 }
             ?>
         </div>
-    </footer>
-</div>
+    </div>
+</footer>

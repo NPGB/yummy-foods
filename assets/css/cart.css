@@ -1,0 +1,18 @@
+.input-number {
+    padding: .375rem .75rem;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.content-cart{
+    text-align: center;
+}
+
+#cart {
+    max-width: 500px;
+    display: inline-grid;
+}
+
+.max-w {
+    max-width: 100px;
+}

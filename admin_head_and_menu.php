@@ -1,21 +1,16 @@
 <nav class="navbar navbar-light sticky-top flex-md-nowrap p-0 height" style="background-color: #e3f2fd;">
-    <a href="admin.php"><img class="height" src="assets/img/<?php $config = include('config/config.php'); echo $config['logo']; ?>" alt=""></a>   
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <div id="user">
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img id="img-user" src="assets/img/user/<?php echo $_SESSION['image'] ?>" alt="">
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="admin.php">view profile</a>
-                        <a class="dropdown-item" href="logout.php">logout</a>
-                    </div>
-                </div>
-            </div>
-        </li>
-      </ul>
-    </nav>
+  <a href="index.php"><img class="height" src="assets/img/<?php $config = include('config/config.php'); echo $config['logo']; ?>" alt=""></a>   
+      <div id="user">
+        <div>
+          <p class="hello">hello, <?php echo $_SESSION['admin_name'] ?></p>
+          <img id="img-user" src="assets/img/user/<?php echo $_SESSION['image'] ?>" alt="">
+        </div>
+        <div class="user-info">
+          <a class="dropdown-item" href="admin.php">view profile</a>
+          <a class="dropdown-item" href="logout.php">logout</a>
+        </div>
+      </div>
+</nav>
 
     <div class="container-fluid">
       <div class="row">
@@ -24,52 +19,35 @@
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link active" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                  <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
+                <i class="fas fa-home"></i> Dashboard <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Orders
-                </a>
+                <a class="nav-link" href="admin_order.php">
+                  <i class="fas fa-file-signature"></i> Orders</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_all_products.php">
-                  <span data-feather="shopping-cart"></span>
-                  Products
-                </a>
+                <i class="fab fa-product-hunt"></i> Products</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_add_product.php">
-                  <span data-feather="users"></span>
-                  Add product
-                </a>
+                <i class="fas fa-plus-circle"></i> Add product</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_bill.php">
-                  <span data-feather="bar-chart-2"></span>
-                  Bill
-                </a>
+                <i class="fas fa-file-invoice-dollar"></i> Bill</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_statistic_product.php">
-                  <span data-feather="layers"></span>
-                  Statistic product
-                </a>
+                <i class="fas fa-chart-pie"></i> Statistic product</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="users.php" <?php if ($_SESSION['role']!=5) echo "style=\" display: none;\"" ?>>
-                  <span data-feather="layers"></span>
-                  Users
-                </a>
+                <i class="fas fa-users"></i> Users</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_statistic_users.php">
-                  <span data-feather="layers"></span>
-                  Statistic user
-                </a>
+                <i class="fas fa-chart-bar"></i> Statistic user</a>
               </li>
             </ul>
 
@@ -82,27 +60,19 @@
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
+                  <span data-feather="file-text"></span> Current month</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
+                  <span data-feather="file-text"></span> Last quarter</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
+                  <span data-feather="file-text"></span> Social engagement</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout.php">
-                  <span data-feather="file-text"></span>
-                  Logout
-                </a>
+                <i class="fas fa-sign-out-alt"></i> Logout</a>
               </li>
             </ul>
           </div>

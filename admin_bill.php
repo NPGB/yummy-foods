@@ -19,6 +19,7 @@ if (!isset($_SESSION['admin_name'])) {
     <link rel="stylesheet" typr="text/css" href="assets/css/admin_page.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
@@ -36,56 +37,53 @@ if (!isset($_SESSION['admin_name'])) {
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-8">
-                        <form>
-                            <div class="form-group row">
-                                <label for="text" class="col-12 col-form-label">Enter Title here</label>
-                                <div class="col-12">
-                                    <input id="text" name="text" placeholder="Enter Title here" class="form-control here"
-                                        required="required" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="textarea" class="col-12 col-form-label">Visual Editor</label>
-                                <div class="col-12">
-                                    <textarea id="textarea" name="textarea" cols="40" rows="5" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-4 ">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Categories</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group row">
-                                        <div class="col-9">
-                                            <input id="tags" name="tags" placeholder=" " required="required" class="form-control here"
-                                                type="text">
-                                        </div>
-                                        <div class=" col-2">
-                                            <button name="submit" type="submit" class="btn btn-light">Add</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form>
-                                    <div class="form-group row">
-                                        <label for="select" class="col-12 col-form-label">Select Category</label>
-                                        <div class="col-8">
-                                            <select id="select" name="select" class="custom-select" required="required">
-                                                <option value="rabbit">Rabbit</option>
-                                                <option value="duck">Duck</option>
-                                                <option value="fish">Fish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="card-footer bg-light">
-                                <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
-                            </div>
-                        </div>
-                    </div>
+                <?php
+                    //Gọi file connection.php 
+                        require_once("lib/connection.php");
+                        $sql = "SELECT `bill_id`, `amount`, `ship`, `total`, `date`, `order_id` FROM `bill` WHERE 1  
+                        ORDER BY `bill`.`date` DESC";
+                        $result = $conn->query($sql);
+                    ?>
+                        <table class="table thead-light table-striped">
+                            <tr>
+                                <td>#</td>
+                                <td>bill_id</td>
+                                <td>amount</td>
+                                <td>ship</td>
+                                <td>total</td>
+                                <td>date</td>
+                                <td>order_id</td>
+                                <td>employees</td>
+                                <td>action</td>
+                            </tr>
+                        <?php
+                        if ($result->num_rows > 0) {
+                            $count = 0;
+                            while ($row = $result->fetch_assoc()): 
+                                $count++;
+                            ?>
+                                <tr>
+                                    <td><?php echo $count ?></td>
+                                    <td><?php echo $row['bill_id'] ?></td>
+                                    <td><?php echo $row['amount'] ?></td>
+                                    <td><?php echo $row['ship'] ?></td>
+                                    <td><?php echo $row['total'] ?></td>
+                                    <td><?php echo $row['date'] ?></td>
+                                    <td><?php echo $row['order_id'] ?></td>
+                                    <td><?php echo $row['employees'] ?></td>
+                                    <td><a href="admin_order_detail.php?order_id=<?php echo $row['order_id'] ?>">detail</a></td>
+                                </tr>
+                            <?php 
+                            endwhile; 
+                        // Máy tính sẽ lưu kết quả từ việc truy vấn dữ liệu bảng
+                        // Do đó chúng ta nên giải phóng bộ nhớ sau khi hoàn tất đọc dữ liệu
+                        mysqli_free_result($query);
+                        }
+                        else {
+                            echo "There are no products";
+                        }	
+                        ?>
+                        </table>
                 </div>
             </div>
         </div>

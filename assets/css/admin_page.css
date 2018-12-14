@@ -2,16 +2,28 @@
     height: 70px;
 }
 
-#name-page {
+.hello {
     display: inline;
-    vertical-align: middle;
-    font-size: 1.5em;
 }
 
-#img-user {
-    height: 50px;
+#user:hover .user-info {
+    display: block;
+}
+
+.user-info {
+    min-width: 50px;
+    display: none;
+    position: absolute;
+    z-index: 99;
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
 }
 
 #user {
-	float: right;
+    float: right;
+    margin-right: 10px;
+}
+
+#img-user {
+    width: 60px;
 }
